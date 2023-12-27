@@ -9,6 +9,8 @@ module.exports = defineConfig({
   transpileDependencies: true,
   lintOnSave: false,
   devServer: {
+    allowedHosts: "all",
+    // disableHostCheck: true,
     proxy: {
       "/api_": {
         target: "http://10.8.1.3:8088",

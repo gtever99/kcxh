@@ -3,6 +3,7 @@ import { Pagination, Autoplay } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { onMounted, ref } from "vue";
 import echarChinaMap from "@/chars/echarChinaMap";
+import NewsList from "@/components/newsList/NewsList.vue";
 
 const swiperData = ref([
   {
@@ -15,37 +16,6 @@ const swiperData = ref([
     path: "www.baidu.com"
   }
 ]);
-
-const newsDataList = [
-  {
-    path: "#",
-    title: "新闻1",
-    content: "新闻内容1",
-    imgUrl:
-      "https://www.ctpc.com.cn/cms/res_base/dwfymh/upload/article/image/2023_4/12_19/hjcclqc33u80.jpg"
-  },
-  {
-    path: "#",
-    title: "新闻2",
-    content: "新闻内容2",
-    imgUrl:
-      "https://www.ctpc.com.cn/cms/res_base/dwfymh/upload/article/image/2023_4/12_25/om7zlqkhied8.jpg"
-  },
-  {
-    path: "#",
-    title: "新闻3",
-    content: "新闻内容3",
-    imgUrl:
-      "https://www.ctpc.com.cn/cms/res_base/dwfymh/upload/article/image/2023_4/12_25/ii54lqkhfvtx.jpg"
-  },
-  {
-    path: "#",
-    title: "新闻4",
-    content: "新闻内容4",
-    imgUrl:
-      "https://www.ctpc.com.cn/cms/res_base/dwfymh/upload/article/image/2023_4/11_14/ngm7loxrg8pp.png"
-  }
-];
 
 onMounted(() => {
   echarChinaMap("chinaMap");
@@ -90,7 +60,7 @@ onMounted(() => {
       <p>
         平台具备开源功能，老师可以在平台上添加案例，根据自身判断设计课程内容。
       </p>
-      <router-link to="#">查看更多</router-link>
+      <router-link class="more" to="#">查看更多</router-link>
     </div>
   </div>
   <!--  合作院校-->
@@ -106,22 +76,13 @@ onMounted(() => {
         <p>合作院校</p>
       </li>
     </ul>
-    <router-link to="#">查看更多</router-link>
+    <router-link class="more" to="#">查看更多</router-link>
   </div>
   <!--  新闻咨询-->
   <h2 class="home-title">新闻咨询</h2>
   <div class="news">
-    <ul class="news_list">
-      <li v-for="item in newsDataList" class="news_list-item" :key="item.title">
-        <a :href="item.path">
-          <div class="news_list-img">
-            <img :src="item.imgUrl" alt="" />
-          </div>
-          <p class="news_list-text">{{ item.title }}</p>
-        </a>
-      </li>
-    </ul>
-    <router-link to="#">查看更多</router-link>
+    <news-list />
+    <router-link class="more" to="/con/news">查看更多</router-link>
   </div>
 </template>
 
@@ -194,11 +155,6 @@ onMounted(() => {
         line-height: 23px;
       }
     }
-    a {
-      font-weight: 900;
-      display: block;
-      text-align: right;
-    }
     @media (max-width: 768px) {
       width: 100%;
     }
@@ -226,53 +182,20 @@ onMounted(() => {
       }
     }
   }
-  & > a {
-    display: block;
-    text-align: right;
-    font-weight: 900;
-  }
 }
 .news {
   width: $widthNum;
   margin: 0 auto;
-  &_list {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    &-item {
-      margin-bottom: 20px;
-      width: calc(25% - 15px);
-      @media (max-width: 927px) {
-        width: calc(50% - 10px);
-      }
-      @media (max-width: 547px) {
-        width: 100%;
-      }
-    }
-    &-img {
-      height: 200px;
-      overflow: hidden;
-      img {
-        width: 100%;
-        height: 200px;
-        object-fit: cover;
-        transform: scale(1);
-        transition: 0.3s;
-      }
-      &:hover {
-        img {
-          transform: scale(1.1);
-        }
-      }
-    }
-    &-text {
-      margin-top: 10px;
-    }
-  }
-  & > a {
-    display: block;
-    text-align: right;
-    font-weight: 900;
+}
+.more {
+  margin-top: 5px;
+  display: block;
+  text-align: right;
+  font-weight: 900;
+  color: #353535;
+  transition: 0.3s;
+  &:hover {
+    color: $pageThemeColor;
   }
 }
 </style>

@@ -21,6 +21,6 @@ pnpm-debug.log*
 *.njsproj
 *.sln
 *.sw?
-*components.d.ts
-*auto-imports.d.ts
-*shims-vue.d.ts
+components.d.ts
+auto-imports.d.ts
+shims-vue.d.ts

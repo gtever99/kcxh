@@ -58,6 +58,9 @@
   border-top: 1px solid #ccc;
   margin-top: 60px;
   color: #5f6464;
+  a {
+    color: #5f6464;
+  }
   &_con {
     width: $widthNum;
     margin: 0 auto;
@@ -114,7 +117,10 @@
         a {
           display: block;
           margin-bottom: 15px;
-          color: #5f6464;
+          transition: 0.3s;
+          &:hover {
+            color: $pageThemeColor;
+          }
         }
       }
     }

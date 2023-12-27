@@ -10,25 +10,25 @@ const useGlobalData = defineStore("globalData", () => {
     },
     {
       name: "产品列表",
-      path: "/",
+      path: "#",
       children: [
         {
           name: "审计思维教学案列平台",
-          path: "/"
+          path: "#"
         }
       ]
     },
     {
       name: "公司简介",
-      path: "/"
+      path: "#"
     },
     {
       name: "新闻咨询",
-      path: "/"
+      path: "/con/news"
     },
     {
       name: "留言板",
-      path: "/"
+      path: "#"
     }
   ];
 

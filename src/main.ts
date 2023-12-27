@@ -13,7 +13,14 @@ import "./styles/index.scss";
 
 const app = createApp(App);
 // 使用的字体图标
-const useIcon = ["Expand", "CloseBold", "UserFilled", "Iphone", "Location"];
+const useIcon = [
+  "Expand",
+  "CloseBold",
+  "UserFilled",
+  "Iphone",
+  "Location",
+  "Right"
+];
 for (const key in useIcon) {
   // @ts-ignore
   app.component(useIcon[key], ElementPlusIconsVue[useIcon[key]]);

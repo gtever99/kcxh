@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { useGlobalDataHook } from "@/stores/modules/globalData";
 import { ref } from "vue";
+import { useRoute } from "vue-router";
 
+const roure = useRoute();
 const navStatus = ref(false);
 const sonActive = ref("");
 const { navDataList } = useGlobalDataHook();
@@ -24,6 +26,7 @@ const { navDataList } = useGlobalDataHook();
         <li
           v-for="item in navDataList"
           class="navcon_list-item"
+          :class="roure.path === item.path ? 'navcon_list-item--active' : ''"
           @mouseenter="sonActive = item.name"
           @mouseleave="sonActive = ''"
           :key="item.name"
@@ -114,6 +117,7 @@ const { navDataList } = useGlobalDataHook();
         align-items: center;
         position: relative;
         font-weight: 900;
+        transition: 0.3s;
         &:after {
           content: "";
           display: block;
@@ -123,11 +127,21 @@ const { navDataList } = useGlobalDataHook();
           background: $pageThemeColor;
           bottom: 20px;
           opacity: 0;
-          transform-origin: 50% 0%;
+          transform-origin: 50% 0;
           transition: 0.2s;
           transform: scale(0.01, 1);
         }
         &:hover {
+          color: $pageThemeColor !important;
+          &:after {
+            transform: scale(1, 1);
+            opacity: 1;
+          }
+        }
+      }
+      &--active {
+        & > a {
+          color: $pageThemeColor !important;
           &:after {
             transform: scale(1, 1);
             opacity: 1;
