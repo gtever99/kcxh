@@ -1,0 +1,21 @@
+html {
+  --widthNum: 1200px
+}
+
+@media (max-width: 1200px) {
+  html {
+    --widthNum: 993px
+  }
+}
+
+@media (max-width: 992px) {
+  html {
+    --widthNum: 95%
+  }
+}
+
+@media (max-width: 768px) {
+}
+
+$widthNum: var(--widthNum);
+$pageThemeColor: #194ac3;
