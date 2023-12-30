@@ -1,12 +1,16 @@
 <script setup lang="ts">
 import { useGlobalDataHook } from "@/stores/modules/globalData";
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { useRoute } from "vue-router";
 
 const roure = useRoute();
 const navStatus = ref(false);
 const sonActive = ref("");
 const { navDataList } = useGlobalDataHook();
+
+watch(roure, () => {
+  navStatus.value = false;
+});
 </script>
 
 <template>
@@ -21,14 +25,14 @@ const { navDataList } = useGlobalDataHook();
           <img src="@/assets/logo.png" alt="logo" />
         </router-link>
       </h1>
-      <!--      web端nav-->
+      <!--                :class="roure.path === item.path ? 'navcon_list-item--active' : ''"-->
       <ul class="navcon_list">
         <li
           v-for="item in navDataList"
           class="navcon_list-item"
-          :class="roure.path === item.path ? 'navcon_list-item--active' : ''"
           @mouseenter="sonActive = item.name"
           @mouseleave="sonActive = ''"
+          :class="roure.path === item.path ? 'navcon_list-item--active' : ''"
           :key="item.name"
         >
           <router-link :to="item.path" target="_blank">
@@ -77,6 +81,7 @@ const { navDataList } = useGlobalDataHook();
 
 <style scoped lang="scss">
 .navcon {
+  background-color: #fff;
   nav {
     display: flex;
     justify-content: space-between;
@@ -151,7 +156,7 @@ const { navDataList } = useGlobalDataHook();
     }
     &-son {
       background: #fff;
-      padding: 15px;
+      padding: 20px;
       position: absolute;
       transform: translate(-50%, 99%);
       bottom: 0;
@@ -190,6 +195,11 @@ const { navDataList } = useGlobalDataHook();
     &-item {
       margin-left: 40px;
       line-height: 60px;
+      a {
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
     }
     &-son {
       li {
@@ -210,6 +220,9 @@ const { navDataList } = useGlobalDataHook();
         }
         a {
           padding-left: 15px;
+          display: block;
+          width: calc(100% - 15px);
+          height: 100%;
         }
       }
     }

@@ -8,6 +8,7 @@ import * as ElementPlusIconsVue from "@element-plus/icons-vue";
 import "swiper/scss";
 import "swiper/scss/navigation";
 import "swiper/scss/pagination";
+import "element-plus/dist/index.css";
 
 import "./styles/index.scss";
 
@@ -25,5 +26,6 @@ for (const key in useIcon) {
   // @ts-ignore
   app.component(useIcon[key], ElementPlusIconsVue[useIcon[key]]);
 }
+
 app.use(router).mount("#app");
 setupStore(app);

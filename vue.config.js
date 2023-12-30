@@ -8,19 +8,7 @@ const pathSrc = path.resolve(__dirname, "src");
 module.exports = defineConfig({
   transpileDependencies: true,
   lintOnSave: false,
-  devServer: {
-    allowedHosts: "all",
-    // disableHostCheck: true,
-    proxy: {
-      "/api_": {
-        target: "http://10.8.1.3:8088",
-        changeOrigin: true,
-        pathRewrite: {
-          "^/api_": ""
-        }
-      }
-    }
-  },
+  productionSourceMap: true,
   css: {
     loaderOptions: {
       sass: {
@@ -28,6 +16,17 @@ module.exports = defineConfig({
         additionalData: `
           @use "@/styles/variable.scss" as *;
         `
+      }
+    }
+  },
+  devServer: {
+    proxy: {
+      [process.env.VUE_APP_PROXY_NAME]: {
+        target: process.env.VUE_APP_API_URL,
+        changeOrigin: true,
+        pathRewrite: {
+          [`^${process.env.VUE_APP_PROXY_NAME}`]: ""
+        }
       }
     }
   },

@@ -8,4 +8,5 @@ import LayoutFooter from "@/layout/LayoutFooter.vue";
   <LayoutNav />
   <LayoutBody />
   <LayoutFooter />
+  <el-backtop :right="50" :bottom="100" />
 </template>

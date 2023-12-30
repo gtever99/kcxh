@@ -1,66 +1,44 @@
 <script setup lang="ts">
-import { INewsItem } from "@/components/newsList/type";
+import { NesListItem } from "@/apis/type.t";
 
 interface Props {
-  newsListData: INewsItem[];
+  newsListData: NesListItem[];
+  isColumn?: boolean;
 }
 
 withDefaults(defineProps<Props>(), {
   newsListData: () => {
-    return [
-      {
-        classify: "国内盛典",
-        createTime: "2019-08-01",
-        describe:
-          "新一轮科技革命和金融业变革正在形成历史性交汇。人工智能、大数据、区块链等技术的蓬勃发展11111111111111111",
-        title: "另类投资全球金融峰会 用科技塑造金融未来",
-        imgUrl:
-          "https://www.gtcom.com.cn/data/uploads/2019/08/01/1564627535.jpg",
-        id: "3"
-      },
-      {
-        classify: "国内盛典",
-        createTime: "2019-08-01",
-        describe:
-          "新一轮科技革命和金融业变革正在形成历史性交汇。人工智能、大数据、区块链等技术的蓬勃发展11111111111111111",
-        title: "另类投资全球金融峰会 用科技塑造金融未来",
-        imgUrl:
-          "https://www.gtcom.com.cn/data/uploads/2019/07/31/1564561455.jpg",
-        id: "2"
-      },
-      {
-        classify: "国内盛典",
-        createTime: "2019-08-01",
-        describe:
-          "2019年7月30日至31日，“另类投资全球金融峰会”正式在北京拉开帷幕。来自金融、科技等.1111111.",
-        title: "聚焦金融•科技 另类投资全球金融峰会引爆关注",
-        imgUrl:
-          "https://www.gtcom.com.cn/data/uploads/2019/07/31/1564560919.jpg",
-        id: "1"
-      }
-    ];
-  }
+    return [];
+  },
+  isColumn: false
 });
+
+const bodyWidth = document.body.offsetWidth;
+const apiUrl = process.env.VUE_APP_API_URL;
 </script>
 
 <template>
-  <div class="newsList">
+  <div
+    class="newsList"
+    :class="isColumn && bodyWidth > 768 ? 'newsList--column' : ''"
+  >
     <router-link
       v-for="item in newsListData"
-      to="/"
+      target="_blank"
+      :to="'/richTextRender?slug=' + item.slug"
       class="newsList_item"
       :key="item.title"
     >
       <div class="img">
-        <img :src="item.imgUrl" alt="" />
+        <img :src="apiUrl + item.img" alt="" />
       </div>
       <div class="newsList_item-con">
         <h3>{{ item.title }}</h3>
         <h4>
-          <span>{{ item.classify }}</span>
-          2019-07-31
+          <span>{{ item.category }}</span>
+          {{ item.published_at }}
         </h4>
-        <p>{{ item.describe }}</p>
+        <p>{{ item.summary }}</p>
         <el-icon><Right /></el-icon>
       </div>
     </router-link>
@@ -70,7 +48,6 @@ withDefaults(defineProps<Props>(), {
 <style scoped lang="scss">
 .newsList {
   display: flex;
-  justify-content: space-between;
   flex-wrap: wrap;
   @media (max-width: 768px) {
     flex-direction: column;
@@ -105,8 +82,13 @@ withDefaults(defineProps<Props>(), {
   &_item {
     width: calc(33.33% - 20px);
     margin-bottom: 30px;
+    margin-right: 30px;
+    &:nth-child(3n + 3) {
+      margin-right: 0;
+    }
     @media (max-width: 768px) {
       width: 100%;
+      margin-right: 0 !important;
     }
     &-con {
       height: 140px;
@@ -141,14 +123,14 @@ withDefaults(defineProps<Props>(), {
       p {
         font-size: 14px;
         color: #666;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        display: -webkit-box;
-        -webkit-line-clamp: 3;
-        -webkit-box-orient: vertical;
-        @media (max-width: 768px) {
-          -webkit-line-clamp: 2;
-        }
+        //overflow: hidden;
+        //text-overflow: ellipsis;
+        //display: -webkit-box;
+        //-webkit-line-clamp: 3;
+        //-webkit-box-orient: vertical;
+        //@media (max-width: 768px) {
+        //  -webkit-line-clamp: 2;
+        //}
       }
       i {
         font-size: 22px;
@@ -177,6 +159,35 @@ withDefaults(defineProps<Props>(), {
           transform: scale(1.1);
         }
       }
+    }
+  }
+}
+.newsList--column {
+  flex-direction: column;
+  .newsList_item {
+    margin: 0 !important;
+    width: 100%;
+    display: flex;
+    border-bottom: 1px solid #ccc;
+    padding: 20px 0;
+    transition: 0.3s;
+    background: transparent;
+    &:hover {
+      background-color: #fafafa;
+    }
+    .img {
+      width: 280px;
+      height: 180px;
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+    .newsList_item-con {
+      width: calc(100% - 280px);
+      border: none;
+      background-color: transparent;
+      padding-top: 0;
     }
   }
 }

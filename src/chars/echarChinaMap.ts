@@ -1,12 +1,15 @@
 import * as echarts from "echarts";
 // @ts-ignore
 import chinaMap from "@/assets/json/china.json";
+import { IChoolGroupItem } from "@/apis/type.t";
 
 /**
  * 横向柱状图
  * @param targetId 要渲染的元素的ID
+ * @param paramsData
  */
-export default (targetId: string) => {
+export default (targetId: string, paramsData: IChoolGroupItem[]) => {
+  if (!paramsData) return;
   const chartDom = document.getElementById(targetId)!;
   const myChart = echarts.init(chartDom);
   echarts.registerMap("china", {
@@ -19,180 +22,29 @@ export default (targetId: string) => {
     type: "FeatureCollection",
     geoJSON: chinaMap
   });
-  const data = [
-    {
-      name: "重庆",
-      value: 0,
-      userNum: 22
-    },
-    {
-      name: "云南",
-      value: 0,
-      userNum: 11
-    },
-    {
-      name: "辽宁",
-      value: 0,
-      userNum: 513
-    },
-    {
-      name: "黑龙江",
-      value: 0,
-      userNum: 31343
-    },
-    {
-      name: "广西",
-      value: 0,
-      userNum: 143
-    },
-    {
-      name: "甘肃",
-      value: 0,
-      userNum: 13
-    },
-    {
-      name: "山西",
-      value: 0,
-      userNum: 3543
-    },
-    {
-      name: "陕西",
-      value: 0,
-      userNum: 134
-    },
-    {
-      name: "吉林",
-      value: 0,
-      userNum: 463
-    },
-    {
-      name: "贵州",
-      value: 0,
-      userNum: 567
-    },
-    {
-      name: "新疆",
-      value: 0,
-      userNum: 42
-    },
-    {
-      name: "青海",
-      value: 0,
-      userNum: 436
-    },
-    {
-      name: "西藏",
-      value: 0,
-      userNum: 543
-    },
-    {
-      name: "四川",
-      value: 0,
-      userNum: 432
-    },
-    {
-      name: "宁夏",
-      value: 0,
-      userNum: 778
-    },
-    {
-      name: "海南",
-      value: 0,
-      userNum: 996
-    },
-    {
-      name: "台湾",
-      value: 0,
-      userNum: 52
-    },
-    {
-      name: "香港",
-      value: 0,
-      userNum: 542
-    },
-    {
-      name: "澳门",
-      value: 0,
-      userNum: 75
-    },
-    {
-      name: "上海",
-      value: 20,
-      userNum: 274
-    },
-    {
-      name: "安徽",
-      value: 20,
-      userNum: 78
-    },
-    {
-      name: "江苏",
-      value: 20,
-      userNum: 542
-    },
-    {
-      name: "浙江",
-      value: 20,
-      userNum: 3435
-    },
-    {
-      name: "北京",
-      value: 20,
-      userNum: 24
-    },
-    {
-      name: "天津",
-      value: 10,
-      userNum: 42
-    },
-    {
-      name: "河北",
-      value: 10,
-      userNum: 3445
-    },
-    {
-      name: "河南",
-      value: 10,
-      userNum: 78
-    },
-    {
-      name: "内蒙古",
-      value: 10,
-      userNum: 75
-    },
-    {
-      name: "湖南",
-      value: 10,
-      userNum: 54
-    },
-    {
-      name: "山东",
-      value: 10,
-      userNum: 68
-    },
-    {
-      name: "江西",
-      value: 10,
-      userNum: 46
-    },
-    {
-      name: "湖北",
-      value: 10,
-      userNum: 354
-    },
-    {
-      name: "福建",
-      value: 10,
-      userNum: 435
-    },
-    {
-      name: "广东",
-      value: 10,
-      userNum: 7968
-    }
-  ];
 
   const flag = document.body.offsetWidth > 1000;
+  const data: {
+    name: string;
+    value: number;
+  }[] = [];
+  const hashNames = new Set();
+  paramsData.map(v => {
+    data.push({
+      name: v.province,
+      value: v.province_count
+    });
+    hashNames.add(v.province);
+  });
+  chinaMap.features.map((v: any) => {
+    const name = v.properties.name;
+    if (!hashNames.has(name)) {
+      data.push({
+        name: name,
+        value: 0
+      });
+    }
+  });
 
   const option = {
     visualMap: {
@@ -206,6 +58,7 @@ export default (targetId: string) => {
     tooltip: {
       trigger: "item",
       formatter: function (params: any) {
+        if (!params || !params.data || params.data.value === 0) return "";
         return `
                 <div style="display: flex;">
                   <p style="position: relative; margin: 0 0 5px 5px">${params.marker}</p>
@@ -214,8 +67,7 @@ export default (targetId: string) => {
                       <p>${params.data.name}</p>
                     </div>
                     <ul>
-                      <li style="list-style: initial; margin-left: 20px">用户数：${params.data.userNum}</li>
-                      <li style="list-style: initial; margin-left: 20px">效率：${params.data.value}</li>
+                      <li style="list-style: initial; margin-left: 20px">院校数量：${params.data.value}</li>
                     </ul>
                   </div>
                 </div>`;

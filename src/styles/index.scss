@@ -9,6 +9,11 @@ html.dark {
   font-family: "SourceHanSansCN-Regular";
 }
 
+.home-title {
+  width: $widthNum;
+  margin: 20px auto;
+}
+
 body {
   overflow-x: hidden;
   background: #fbfbfb;
@@ -36,4 +41,36 @@ img{
   src: url('@/assets/font/SourceHanSansCN-Regular.ttf');
   font-weight: normal;
   font-style: normal;
+}
+
+
+.text-describe {
+  width: 850px;
+  margin: 0 auto;
+  color: #333;
+  font-size: 16px;
+  @media (max-width: 850px) {
+    width: $widthNum;
+  }
+  .title {
+    margin: 50px 0 25px 0;
+    text-align: center;
+    color: $pageThemeColor;
+    font-weight: 400;
+  }
+  & > p {
+    text-indent: 28px;
+    margin-bottom: 20px;
+    line-height: 30px;
+  }
+  ul {
+    li {
+      line-height: 30px;
+      padding-left: 26px;
+    }
+  }
+  .text-title {
+    margin-bottom: 0 !important;
+    text-indent: 0 !important;
+  }
 }

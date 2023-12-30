@@ -1,24 +1,21 @@
 # kcxh-web
 
-## Project setup
+## 如果您没有安装依赖，运行命令：
 ```
 yarn install
 ```
 
-### Compiles and hot-reloads for development
+### 开发环境运行命令
 ```
 yarn serve
 ```
 
-### Compiles and minifies for production
+### 生产环境打包命令
 ```
 yarn build
 ```
 
-### Lints and fixes files
+### 修复eslint问题
 ```
 yarn lint
 ```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
